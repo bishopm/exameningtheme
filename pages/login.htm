@@ -1,0 +1,23 @@
+title = "Login"
+url = "/login"
+layout = "default"
+is_hidden = 0
+
+[account]
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+
+[sociallogin]
+==
+<div class="container py-3">
+    {% component 'account' %}
+    {% if not user %}
+        {% for name, link in social_login_links %}
+            {{ name }}as
+        {% endfor %}
+        erer
+    {% else %}
+        asas
+    {% endif %}
+</div>

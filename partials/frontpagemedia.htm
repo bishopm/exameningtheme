@@ -1,0 +1,37 @@
+[viewBag]
+
+[builderList]
+modelClass = "Bishopm\Examening\Models\Video"
+scope = "scopeTaketwo"
+scopeValue = "{{ :scope }}"
+displayColumn = "youtube_id"
+noRecordsMessage = "No records found"
+detailsPage = "-"
+detailsUrlParameter = "id"
+pageNumber = "{{ :page }}"
+sortColumn = "published_at"
+sortDirection = "desc"
+==
+{% set records = builderList.records %}
+{% set displayColumn = builderList.displayColumn %}
+{% set noRecordsMessage = builderList.noRecordsMessage %}
+{% set detailsPage = builderList.detailsPage %}
+{% set detailsKeyColumn = builderList.detailsKeyColumn %}
+{% set detailsUrlParameter = builderList.detailsUrlParameter %}
+
+<div class="container">
+    {% if records %}
+        <div class="pt-4 row">
+            {% for record in records %}
+                <div class="col-md-6 blog-item">
+                    <div class="videoTitle">
+                        <h4>{{ record.title }}</h4>
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/{{ record.youtube_id }}" allowfullscreen></iframe>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <li class="no-data">{{ noRecordsMessage }}</li>
+    {% endif %}
+</div>

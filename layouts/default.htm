@@ -1,0 +1,87 @@
+[staticMenu]
+code = "main"
+
+[staticMenu staticMenu2]
+code = "footer"
+==
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ 'assets/fontawesome/css/fontawesome.min.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/fontawesome/css/brands.min.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/fontawesome/css/solid.min.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/css/bootstrap.min.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/css/style.css'|theme }}">
+    <title>Examening</title>
+  </head>
+  <body>
+    <header class="navigation">
+	  <nav class="navbar navbar-expand-lg py-4" id="navbar">
+		<div class="container">
+		  <a class="navbar-brand" href="{{ 'home'|page }}">
+		  	Examen<span>ing</span>
+		  </a>
+		  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#examenMenu" aria-controls="examenMenu" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="fa fa-bars"></span>
+		  </button>
+	      <div class="collapse navbar-collapse text-center" id="examenMenu">
+             {% if staticMenu.menuItems %}
+               <ul class="navbar-nav ml-auto">
+                 {% for item in staticMenu.menuItems if not item.viewBag.isHidden %}
+                    <li role="presentation" class="nav-item {{ item.isActive ? 'active' : '' }} {{ item.isChildActive ? 'child-active' : '' }} {{ item.viewBag.cssClass }}">
+                        {% if item.url %}
+                            <a class="nav-link" href="{{ item.url }}" {{ item.viewBag.isExternal ? 'target="_blank"' }}>
+                                {{ item.title }}
+                            </a>
+                        {% else %}
+                            <span>{{ item.title }}</span>
+                        {% endif %}
+                
+                        {% if item.items %}
+                            <ul>{% partial __SELF__ ~ "::items" items=item.items %}</ul>
+                        {% endif %}
+                    </li>
+                  {% endfor %}
+               </ul>
+             {% endif %}			
+		  </div>
+		</div>
+	  </nav>
+    </header>
+    {% page %}
+    <footer class="footer section">
+    	<div class="container">
+    		<div class="footer-btm py-2">
+    			<div class="row">
+    			    <div class="col-md-10 text-center">
+    			    {% if staticMenu2.menuItems %}
+    			        <div style="display:flex; justify-content: space-between;">
+                         {% for item2 in staticMenu2.menuItems if not item2.viewBag.isHidden %}
+                            {% if item2.url %}
+                                <a class="footerlink" href="{{ item2.url }}" {{ item2.viewBag.isExternal ? 'target="_blank"' }}>
+                                    {{ item2.title }}
+                                </a>
+                            {% else %}
+                                <span>{{ item2.title }}</span>
+                            {% endif %}
+                          {% endfor %}
+                         </div>
+                     {% endif %}
+    			    </div>
+    				<div class="col-md-2 text-left text-lg-right">
+    					<ul class="list-inline footer-socials">
+    						<li class="list-inline-item"><a class="footerlink" target="_blank" href="https://twitter.com/MJ_Bishop"><i class="fab fa-twitter-square"></i></a></li>
+    						<li class="list-inline-item"><a class="footerlink" target="_blank" href="https://www.instagram.com/michaeljbishop"><i class="fab fa-instagram"></i></a></li>
+    					</ul>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </footer>
+    <script src="{{ 'assets/js/jquery-3.5.1.min.js'|theme }}"></script>
+    {% framework %}
+    <script src="{{ 'assets/js/bootstrap.bundle.min.js'|theme }}"></script>
+  </body>
+</html>

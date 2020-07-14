@@ -1,0 +1,29 @@
+title = "Subject"
+url = "/subject/:tag"
+layout = "default"
+is_hidden = 0
+
+[blogTagSearch]
+tag = "{{ :tag }}"
+page = "{{ :page }}"
+resultsPerPage = 10
+postPage = "blog-post"
+categoryPage = "about"
+==
+<div class="container pt-3">
+<h4>Blog posts tagged "{{ blogTagSearch.tag.name }}"</h4>
+
+{% if blogTagSearch.posts %}
+    <ul class="list-unstyled">
+        {% for Post in blogTagSearch.tag.posts %}
+             <li class="pb-2">
+                 <a href="{{Post.url}}"><b>{{ Post.title }}</b></a> <small>{{Post.published_at}}</small>
+                 <div class="text-justify"><small>{{Post.excerpt}}</small></div>
+             </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    No posts found.
+{% endif %}
+
+</div>

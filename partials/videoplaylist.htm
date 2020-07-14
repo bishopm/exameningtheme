@@ -1,0 +1,53 @@
+[viewBag]
+
+[builderList]
+modelClass = "Bishopm\Examening\Models\Video"
+scope = "-"
+scopeValue = "{{ :scope }}"
+displayColumn = "youtube_id"
+noRecordsMessage = "No records found"
+detailsPage = "-"
+detailsUrlParameter = "id"
+pageNumber = "{{ :page }}"
+==
+{% set records = builderList.records %}
+{% set displayColumn = builderList.displayColumn %}
+{% set noRecordsMessage = builderList.noRecordsMessage %}
+{% set detailsPage = builderList.detailsPage %}
+{% set detailsKeyColumn = builderList.detailsKeyColumn %}
+{% set detailsUrlParameter = builderList.detailsUrlParameter %}
+
+<div class="container">
+    {% if records %}
+        <div class="row pt-4">
+            {% for record in records %}
+            <div class="col-md-6 blog-item">
+                <div class="videoTitle">
+                    <h4>{{ record.title }}</h4>
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/{{ record.youtube_id }}" allowfullscreen></iframe>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <li class="no-data">{{ noRecordsMessage }}</li>
+    {% endif %}
+
+    {% if records.lastPage > 1 %}
+        <ul class="pagination">
+            {% if records.currentPage > 1 %}
+                <li><a href="{{ this.page.baseFileName|page({ (pageParam): (records.currentPage-1) }) }}">&larr; Prev</a></li>
+            {% endif %}
+    
+            {% for page in 1..records.lastPage %}
+                <li class="{{ records.currentPage == page ? 'active' : null }}">
+                    <a href="{{ this.page.baseFileName|page({ (pageParam): page }) }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+    
+            {% if records.lastPage > records.currentPage %}
+                <li><a href="{{ this.page.baseFileName|page({ (pageParam): (records.currentPage+1) }) }}">Next &rarr;</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</div>
